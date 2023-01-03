@@ -11,9 +11,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.function.ToIntFunction;
 
-import static com.graphics.Transformer.perspective;
-import static com.graphics.Transformer.shift;
-
 public class ScreenPanel extends JPanel {
 	
 	
