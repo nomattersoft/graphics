@@ -3,6 +3,8 @@ package com.graphics;
 import com.graphics.model.Polygon;
 import com.graphics.model.Vertex;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Transformer {
@@ -21,7 +23,15 @@ public class Transformer {
 	}
 	
 	public static Polygon perspective(Polygon p) {
-		return new Polygon(p.getVertexes().stream().map(Transformer::perspective).collect(Collectors.toList()));
+		return new Polygon(p.getVertexes().stream().map(Transformer::perspective).collect(Collectors.toList()), p.getColor());
+	}
+	
+	public static List<Polygon> shift(List<Polygon> polygons, Vertex vertex) {
+		List<Polygon> shiftedPolygons = new ArrayList<>();
+		for (Polygon polygon : polygons) {
+			shiftedPolygons.add(shift(polygon, vertex));
+		}
+		return shiftedPolygons;
 	}
 	
 	public static Vertex shift(Vertex v, Vertex d) {
@@ -33,8 +43,9 @@ public class Transformer {
 	}
 	
 	public static Polygon shift(Polygon p, Vertex d) {
-		return new Polygon(p.getVertexes().stream().map(v -> shift(v, d)).collect(Collectors.toList()));
+		return new Polygon(p.getVertexes().stream().map(v -> shift(v, d)).collect(Collectors.toList()), p.getColor());
 	}
+	
 	public static void changeFocus(int value) {
 		f += value;
 	}

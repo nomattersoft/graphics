@@ -12,5 +12,6 @@ public class FileHandlerTest {
 	public void readFile() {
 		List<Polygon> polygons = FileHandler.readFile("src/test/resources/polygons.json");
 		Assertions.assertEquals(1, polygons.size());
+		Assertions.assertEquals("#00ff00", polygons.get(0).getColor());
 	}
 }
