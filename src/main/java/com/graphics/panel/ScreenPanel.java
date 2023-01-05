@@ -49,8 +49,11 @@ public class ScreenPanel extends JPanel {
 		List<Polygon> polygons = FileHandler.readFile("src/main/resources/polygons.json");
 		polygons.addAll(shift(FileHandler.readFile("src/main/resources/cube.json"),
 														new Vertex(-200, -150, -100)));
-		polygons.addAll(rotate(shift(FileHandler.readFile("src/main/resources/cube.json"),
-				new Vertex(100, 100, 100)), alfa));
+		
+		for (int i = 0; i < 10; i++) {
+			polygons.addAll(rotate(shift(FileHandler.readFile("src/main/resources/cube.json"),
+					new Vertex(100, -300 + 120 * i , 100)), alfa * i));
+		}
 		
 		drawSorted(g, polygons);
 	}
