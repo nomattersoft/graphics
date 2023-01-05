@@ -7,8 +7,6 @@ import com.graphics.util.files.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.ToIntFunction;
@@ -21,13 +19,13 @@ public class ScreenPanel extends JPanel {
 	
 	
 	public ScreenPanel() {
-		addMouseWheelListener(new MouseWheelListener() {
-			
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				Transformer.changeFocus(e.getWheelRotation());
-				repaint();
+		addMouseWheelListener(e -> {
+			if (e.isAltDown()) {
+				Transformer.changeCamera(e.getWheelRotation());
+			} else {
+				Transformer.changePlane(e.getWheelRotation());
 			}
+			repaint();
 		});
 	}
 	
@@ -35,14 +33,6 @@ public class ScreenPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.decode("#2b2b2b"));
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
-//		for (Polygon p : FileHandler.readFile("src/main/resources/polygons.json")) {
-//			draw(g, perspective(p), Color.red);
-//		}
-//
-//		for (Polygon p : FileHandler.readFile("src/main/resources/cube.json")) {
-//			draw(g, perspective(shift(p, new Vertex(100, 100, 100))), Color.green);
-//		}
 		
 		List<Polygon> polygons = FileHandler.readFile("src/main/resources/polygons.json");
 		polygons.addAll(shift(FileHandler.readFile("src/main/resources/cube.json"), new Vertex(100, 100, 100)));

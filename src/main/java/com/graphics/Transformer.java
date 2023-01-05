@@ -9,10 +9,11 @@ import java.util.stream.Collectors;
 
 public class Transformer {
 	
-	private static int f = 100;
+	private static int camera = -320;
+	private static int plane = -40;
 	
 	public static int perspective(int p, int z) {
-		return f*p/z;
+		return p*(camera - plane)/(camera - z);
 	}
 	
 	public static Vertex perspective(Vertex v) {
@@ -46,7 +47,11 @@ public class Transformer {
 		return new Polygon(p.getVertices().stream().map(v -> shift(v, d)).collect(Collectors.toList()), p.getColor());
 	}
 	
-	public static void changeFocus(int value) {
-		f += value;
+	public static void changeCamera(int value) {
+		camera += value * 20;
+	}
+	
+	public static void changePlane(int value) {
+		plane += value * 20;
 	}
 }
