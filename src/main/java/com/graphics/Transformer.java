@@ -23,7 +23,7 @@ public class Transformer {
 	}
 	
 	public static Polygon perspective(Polygon p) {
-		return new Polygon(p.getVertexes().stream().map(Transformer::perspective).collect(Collectors.toList()), p.getColor());
+		return new Polygon(p.getVertices().stream().map(Transformer::perspective).collect(Collectors.toList()), p.getColor());
 	}
 	
 	public static List<Polygon> shift(List<Polygon> polygons, Vertex vertex) {
@@ -43,7 +43,7 @@ public class Transformer {
 	}
 	
 	public static Polygon shift(Polygon p, Vertex d) {
-		return new Polygon(p.getVertexes().stream().map(v -> shift(v, d)).collect(Collectors.toList()), p.getColor());
+		return new Polygon(p.getVertices().stream().map(v -> shift(v, d)).collect(Collectors.toList()), p.getColor());
 	}
 	
 	public static void changeFocus(int value) {

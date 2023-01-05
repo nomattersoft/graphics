@@ -1,12 +1,11 @@
 package com.graphics.model;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class Polygon {
 	
-	private List<Vertex> vertexes;
+	private List<Vertex> vertices;
 	
 	private String color;
 	
@@ -15,22 +14,22 @@ public class Polygon {
 	
 	}
 	
-	public Polygon(Vertex ... vertexes) {
-		this.vertexes = Arrays.asList(vertexes);
+	public Polygon(Vertex ... vertices) {
+		this.vertices = Arrays.asList(vertices);
 	}
 	
-	public Polygon(List<Vertex> vertexes, String color) {
-		this.vertexes = vertexes;
+	public Polygon(List<Vertex> vertices, String color) {
+		this.vertices = vertices;
 		this.color = color;
 	}
 	
 	
-	public List<Vertex> getVertexes() {
-		return vertexes;
+	public List<Vertex> getVertices() {
+		return vertices;
 	}
 	
-	public void setVertexes(List<Vertex> vertexes) {
-		this.vertexes = vertexes;
+	public void setVertices(List<Vertex> vertices) {
+		this.vertices = vertices;
 	}
 	
 	public String getColor() {

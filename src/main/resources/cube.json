@@ -1,6 +1,6 @@
 [
 	{
-		"vertexes": [
+		"vertices": [
 			{
 				"x": 0,
 				"y": 100,
@@ -25,7 +25,7 @@
 		"color": "#00ff00"
 	},
 	{
-		"vertexes": [
+		"vertices": [
 			{
 				"x": 0,
 				"y": 0,
@@ -51,7 +51,7 @@
 	},
 	
 	{
-		"vertexes": [
+		"vertices": [
 			{
 				"x": 0,
 				"y": 100,
@@ -76,7 +76,7 @@
 		"color": "#00ff00"
 	},
 	{
-		"vertexes": [
+		"vertices": [
 			{
 				"x": 0,
 				"y": 100,

@@ -2,8 +2,8 @@ package com.graphics.panel;
 
 import com.graphics.Transformer;
 import com.graphics.model.Polygon;
-import com.graphics.util.files.FileHandler;
 import com.graphics.model.Vertex;
+import com.graphics.util.files.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,22 +56,22 @@ public class ScreenPanel extends JPanel {
 	}
 	
 	private int averageZ(Polygon p) {
-		return (int)p.getVertexes().stream().mapToInt(Vertex::getZ).summaryStatistics().getAverage();
+		return (int)p.getVertices().stream().mapToInt(Vertex::getZ).summaryStatistics().getAverage();
 	}
 	
 	private int maxZ(Polygon polygon) {
-		return polygon.getVertexes().stream().max(Comparator.comparingInt(Vertex::getZ)).get().getZ();
+		return polygon.getVertices().stream().max(Comparator.comparingInt(Vertex::getZ)).get().getZ();
 	}
 	
 	private void draw(Graphics g, Polygon polygon) {
 		Polygon p = shift(polygon, new Vertex(getWidth()/2, getHeight()/2, 0));
 		g.setColor(Color.black);
-		g.fillPolygon(getPoints(p, Vertex::getX), getPoints(p, Vertex::getY), p.getVertexes().size());
+		g.fillPolygon(getPoints(p, Vertex::getX), getPoints(p, Vertex::getY), p.getVertices().size());
 		g.setColor(Color.decode(p.getColor()));
-		g.drawPolygon(getPoints(p, Vertex::getX), getPoints(p, Vertex::getY), p.getVertexes().size());
+		g.drawPolygon(getPoints(p, Vertex::getX), getPoints(p, Vertex::getY), p.getVertices().size());
 	}
 	
 	private static int[] getPoints(Polygon polygon, ToIntFunction<Vertex> mapper) {
-		return polygon.getVertexes().stream().mapToInt(mapper).toArray();
+		return polygon.getVertices().stream().mapToInt(mapper).toArray();
 	}
 }

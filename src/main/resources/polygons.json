@@ -1,6 +1,6 @@
 [
 	{
-		"vertexes": [
+		"vertices": [
 			{
 				"x": -500,
 				"y": 500,
@@ -25,7 +25,7 @@
 		"color": "#ff0000"
 	},
 	{
-		"vertexes": [
+		"vertices": [
 			{
 				"x": -500,
 				"y": -500,
