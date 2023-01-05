@@ -47,6 +47,24 @@ public class Transformer {
 		return new Polygon(p.getVertices().stream().map(v -> shift(v, d)).collect(Collectors.toList()), p.getColor());
 	}
 	
+	public static List<Polygon> rotate(List<Polygon> polygons, double alfa) {
+		List<Polygon> rotatedPolygons = new ArrayList<>();
+		for (Polygon polygon : polygons) {
+			rotatedPolygons.add(rotate(polygon, alfa));
+		}
+		return rotatedPolygons;
+	}
+	
+	public static Polygon rotate(Polygon p, double alfa) {
+		return new Polygon(p.getVertices().stream().map(v -> rotate(v, alfa)).collect(Collectors.toList()), p.getColor());
+	}
+	
+	public static Vertex rotate(Vertex v, double alfa) {
+		double x = v.getX() * Math.cos(alfa) + v.getZ() * Math.sin(alfa);
+		double z = -v.getX() * Math.sin(alfa) + v.getZ() * Math.cos(alfa);
+		return new Vertex((int) x, v.getY(), (int) z);
+	}
+	
 	public static void changeCamera(int value) {
 		camera += value * 20;
 	}

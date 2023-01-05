@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
-import static com.graphics.Transformer.perspective;
-import static com.graphics.Transformer.shift;
+import static com.graphics.Transformer.*;
 
 public class ScreenPanel extends JPanel {
 	
+	private volatile double alfa = 0;
 	
 	public ScreenPanel() {
 		addMouseWheelListener(e -> {
@@ -27,6 +27,18 @@ public class ScreenPanel extends JPanel {
 			}
 			repaint();
 		});
+		
+		new Thread(() -> {
+			while (true) {
+				alfa += 0.05;
+				try {
+					Thread.sleep(30);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+				repaint();
+			}
+		}).start();
 	}
 	
 	@Override
@@ -35,7 +47,10 @@ public class ScreenPanel extends JPanel {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		List<Polygon> polygons = FileHandler.readFile("src/main/resources/polygons.json");
-		polygons.addAll(shift(FileHandler.readFile("src/main/resources/cube.json"), new Vertex(100, 100, 100)));
+		polygons.addAll(shift(FileHandler.readFile("src/main/resources/cube.json"),
+														new Vertex(-200, -150, -100)));
+		polygons.addAll(rotate(shift(FileHandler.readFile("src/main/resources/cube.json"),
+				new Vertex(100, 100, 100)), alfa));
 		
 		drawSorted(g, polygons);
 	}
