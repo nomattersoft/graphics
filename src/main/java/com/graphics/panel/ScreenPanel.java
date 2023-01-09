@@ -7,8 +7,11 @@ import com.graphics.util.files.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Comparator;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -17,20 +20,40 @@ import static com.graphics.Transformer.*;
 public class ScreenPanel extends JPanel {
 	
 	private volatile double alfa = 0;
+	private Vertex camera = new Vertex(0, 0, 0);
+	private Set<Character> keys = new HashSet<>();
+	private int dShift = 20;
 	
 	public ScreenPanel() {
+		
+		this.setFocusable(true);
+		
 		addMouseWheelListener(e -> {
-			if (e.isAltDown()) {
-				Transformer.changeCamera(e.getWheelRotation());
-			} else {
-				Transformer.changePlane(e.getWheelRotation());
-			}
+			Transformer.changeCamera(e.getWheelRotation());
 			repaint();
+		});
+		
+		addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+			
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				keys.add(e.getKeyChar());
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keys.remove(e.getKeyChar());
+			}
 		});
 		
 		new Thread(() -> {
 			while (true) {
-				alfa += 0.05;
+				alfa += 0.01;
 				try {
 					Thread.sleep(30);
 				} catch (InterruptedException e) {
@@ -55,6 +78,24 @@ public class ScreenPanel extends JPanel {
 					new Vertex(100, -300 + 120 * i , 100)), alfa * i));
 		}
 		
+		int x = 0, y = 0, z = 0;
+		if (keys.contains('w')) {
+			z -= dShift;
+		}
+		if (keys.contains('s')) {
+			z += dShift;
+		}
+		if (keys.contains('a')) {
+			x += dShift;
+		}
+		if (keys.contains('d')) {
+			x -= dShift;
+		}
+		
+		camera = shift(camera, new Vertex(x, y, z));
+		
+		polygons = shift(polygons, camera);
+		
 		drawSorted(g, polygons);
 	}
 	
@@ -65,10 +106,6 @@ public class ScreenPanel extends JPanel {
 	
 	private int averageZ(Polygon p) {
 		return (int)p.getVertices().stream().mapToInt(Vertex::getZ).summaryStatistics().getAverage();
-	}
-	
-	private int maxZ(Polygon polygon) {
-		return polygon.getVertices().stream().max(Comparator.comparingInt(Vertex::getZ)).get().getZ();
 	}
 	
 	private void draw(Graphics g, Polygon polygon) {
