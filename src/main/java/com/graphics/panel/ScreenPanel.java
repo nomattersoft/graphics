@@ -20,9 +20,11 @@ import static com.graphics.Transformer.*;
 public class ScreenPanel extends JPanel {
 	
 	private volatile double alfa = 0;
+	private volatile double yAngle = 0;
 	private Vertex camera = new Vertex(0, 0, 0);
 	private Set<Character> keys = new HashSet<>();
 	private int dShift = 20;
+	private double dYAngle = 0.03;
 	
 	public ScreenPanel() {
 		
@@ -91,10 +93,18 @@ public class ScreenPanel extends JPanel {
 		if (keys.contains('d')) {
 			x -= dShift;
 		}
+		if (keys.contains('e')) {
+			yAngle += dYAngle;
+		}
+		if (keys.contains('q')) {
+			yAngle -= dYAngle;
+		}
 		
 		camera = shift(camera, new Vertex(x, y, z));
 		
 		polygons = shift(polygons, camera);
+		
+		polygons = rotate(polygons, yAngle);
 		
 		drawSorted(g, polygons);
 	}
