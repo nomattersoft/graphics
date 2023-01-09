@@ -101,7 +101,7 @@ public class ScreenPanel extends JPanel {
 	
 	private void drawSorted(Graphics g, List<Polygon> polygons) {
 		List<Polygon> sorted = polygons.stream().sorted((p1, p2) -> averageZ(p2) - averageZ(p1)).collect(Collectors.toList());
-		sorted.forEach(p -> draw(g, perspective(p)));
+		sorted.forEach(p -> draw(g, perspective(cut(p))));
 	}
 	
 	private int averageZ(Polygon p) {
@@ -109,6 +109,9 @@ public class ScreenPanel extends JPanel {
 	}
 	
 	private void draw(Graphics g, Polygon polygon) {
+		if (polygon.getVertices().stream().allMatch(vertex -> vertex.getZ() == 0)) {
+			return;
+		}
 		Polygon p = shift(polygon, new Vertex(getWidth()/2, getHeight()/2, 0));
 		g.setColor(Color.black);
 		g.fillPolygon(getPoints(p, Vertex::getX), getPoints(p, Vertex::getY), p.getVertices().size());

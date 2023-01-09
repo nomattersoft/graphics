@@ -65,6 +65,21 @@ public class Transformer {
 		return new Vertex((int) x, v.getY(), (int) z);
 	}
 	
+	public static List<Polygon> cut(List<Polygon> polygons) {
+		return polygons.stream().map(Transformer::cut).collect(Collectors.toList());
+	}
+	
+	public static Polygon cut(Polygon p) {
+		return new Polygon(p.getVertices().stream().map(Transformer::cut).collect(Collectors.toList()), p.getColor());
+	}
+	
+	public static Vertex cut(Vertex v) {
+		if (v.getZ() < 0) {
+			v.setZ(0);
+		}
+		return v;
+	}
+	
 	public static void changeCamera(int value) {
 		camera += value * 20;
 	}
